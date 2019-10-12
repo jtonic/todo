@@ -1,0 +1,19 @@
+HELP.md
+be/target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### IntelliJ IDEA ###
+.idea/*
+!.idea/runConfigurations
+.iml
+
+### VS Code ###
+.vscode/
+
+### node
+
+fe/node_modules
+
+/*.iml

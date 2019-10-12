@@ -1,0 +1,10 @@
+# FROM node:10 AS builder
+FROM node:10-alpine AS builder
+COPY ./ /app
+WORKDIR /app
+RUN npm install && npm run build
+
+FROM nginx
+RUN mkdir /app
+COPY --from=builder /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf

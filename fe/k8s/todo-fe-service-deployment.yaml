@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: todo-fe
-          image: jtonic/todo-fe:v1
+          image: jtonic/todo-fe-alpine-ngnix-vue:v2
           resources:
             requests:
               cpu: 100m
@@ -37,3 +37,5 @@ spec:
               cpu: 2
               memory: 500Mi
           imagePullPolicy: Always
+          ports:
+            - containerPort: 80

@@ -7,7 +7,7 @@ be/target/
 ### IntelliJ IDEA ###
 .idea/*
 !.idea/runConfigurations
-.iml
+*.iml
 
 ### VS Code ###
 .vscode/
@@ -16,4 +16,5 @@ be/target/
 
 fe/node_modules
 
+fe/dist
 /*.iml

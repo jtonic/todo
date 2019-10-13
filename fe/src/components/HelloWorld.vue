@@ -12,7 +12,7 @@
         <span slot="footer" class="dialog-footer">
           <el-button @click="cancel">Cancel</el-button>
           <el-button type="primary" @click="confirm"
-            >Confirm</el-button
+            >Confirm (by axios)</el-button
           >
         </span>
       </el-dialog>
@@ -159,7 +159,13 @@ export default {
       this.dialogVisible = false;
     },
     confirm() {
-      console.log("You made a good decision");
+      const baseURI = "http://todo-be:8081";
+      this.$http
+        .get(baseURI)
+        .then(result => {
+          this.users = result.data;
+        })
+        .catch(error => console.log(`Error has occurred ${error}`));
       this.dialogVisible = false;
     }
   }

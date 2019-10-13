@@ -2,8 +2,11 @@ import Vue from "vue";
 import Vuex from "vuex";
 import App from "./app/App.vue";
 import "./plugins/element.js";
+import axios from "axios";
 
 Vue.config.productionTip = false;
+
+Vue.prototype.$http = axios;
 
 Vue.use(Vuex);
 

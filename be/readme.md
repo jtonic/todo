@@ -1,5 +1,12 @@
 # Objectives
 
+## Prerequisites
+
+- java 11 installed
+- maven 3.5+ installed
+
+## Action steps:
+
 - [x] Build and run a spring application in a docker container
 
     - [x] documentation about sb application in docker
@@ -60,9 +67,9 @@
         
         - [x] call the REST endpoint using the default browser
         
-        `minikube service spring-boot-be`
+        `minikube service todo-be`
         
-        - [x] or run curl `curl  $(minikube service spring-boot-be --url)` 
+        - [x] or run curl `curl  $(minikube service todo-be --url)` 
         
         > **Note** If something went wrong, and the mistakes is in the kubernetes service/deployment definition file, correct the mistake and replace/redeploy it.
         > The command: `kubectl replace --force -f ./k8s/todo-be-service-deployment.yaml`. DON'T USE THIS IN PROD!!!

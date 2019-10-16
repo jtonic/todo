@@ -9,7 +9,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 30001
+      nodePort: 30001
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: todo-fe
-          image: jtonic/todo-fe-alpine-ngnix-vue:v2
+          image: jtonic/todo-fe-alpine-ngnix-vue:latest
           resources:
             requests:
               cpu: 100m

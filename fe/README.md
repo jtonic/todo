@@ -25,7 +25,7 @@
 
 - [x] Test the todo-fe application by pointing the browser to `http://localhost:8080`
 
-- [ ] Push the image on hub.docker.io/jtonic
+- [x] Push the image on hub.docker.io/jtonic
 
     ```shell script
     docker login
@@ -34,10 +34,14 @@
     docker push jtonic/todo-fe-alpine-ngnix-vue
     docker push jtonic/todo-fe-alpine-ngnix-vue:v1
     ```
+    > Notes: For development on local it is better to use local image. 
+    >
+    > But a kubernetes cluster (i.e. minikube) use its docker (not the host docker) to pull the images.
+    > Read [this cookbook to see how to do this](../docs/cookbooks/cloud.md#recipe-1) 
 
 - [x] Update the k8s configuration to refer the newly published image
 
-- [ ] Start the minikube
+- [x] Start the minikube
 
     `minikube start`
 
@@ -45,7 +49,7 @@
 
     `kubectl create -f ./k8s/todo-fe-service-deployment.yaml`
     
-- [ ] or replace the service/deployment
+- [x] or replace the service/deployment
 
     `kubectl replace --force -f ./k8s/todo-fe-service-deployment.yaml`
 

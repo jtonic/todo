@@ -15,6 +15,10 @@
 
 ## Action steps
 
+- create a new (todo) k8s namespace
+
+    `kubectl create -f ./k8s/todo-namespace.yaml`
+    
 - [todo-be action steps](./be/readme.md#action-steps)
 - [todo-fe action steps](./fe/readme.md#action-steps)
 

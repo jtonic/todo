@@ -1,0 +1,8 @@
+# enable this jupiter config files by removing the .old extension of its filename
+# for springboot it seems that the parallel testing (thread per class) degrade the test performance (spring context is kept but business beans are discarded).
+
+junit.jupiter.testinstance.lifecycle.default = per_class
+junit.jupiter.execution.parallel.enabled = true
+junit.jupiter.execution.parallel.mode.default = same_thread
+junit.jupiter.execution.parallel.mode.classes.default = concurrent
+junit.jupiter.execution.parallel.config.dynamic.factor=1

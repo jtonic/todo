@@ -14,6 +14,6 @@ import org.junit.jupiter.api.Tag;
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Tag("component")
-@interface ComponentTag {
+public @interface ComponentTag {
   
 }

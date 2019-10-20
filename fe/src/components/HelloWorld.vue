@@ -159,7 +159,7 @@ export default {
       this.dialogVisible = false;
     },
     confirm() {
-      const baseURI = "http://todo-be:8081";
+      const baseURI = "http://192.168.99.100:30001/api";
       this.$http
         .get(baseURI)
         .then(result => {

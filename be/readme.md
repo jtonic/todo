@@ -24,9 +24,14 @@
 
         - build the maven image
         `docker build -t todo-zulu-alpine-jre-11 .`
+        > __Notes:__
+        > in order to simplify the local development and not publishing every build in docker hub/registry:
+        > - Make the kubectl virtual machine's docker the current one (instead of the host docker) `eval $(minikube docker-env)`
+        > - Don't version every build by tagging it
+        > - To make the host docker again the current one use `eval $(minikube docker-env -u)`
 
         - start the container and run the application
-        `docker run -d -p 8080:8080 --name todo-zulu-alpine-jre-11 todo-zulu-alpine-jre-11`
+        `docker run -d -p 8081:8081 --name todo-zulu-alpine-jre-11 todo-zulu-alpine-jre-11`
 
         - test the docker container is running
         `docker ps`
@@ -97,7 +102,7 @@
         `docker image prune`
         
         - run the remote docker image (for production it is mandatory to run a version)
-        `docker run -d -p 8080:8080 --name todo-zulu-alpine-jre-11 jtonic/todo-zulu-alpine-jre-11:v1`
+        `docker run -d -p 8081:8081 --name todo-zulu-alpine-jre-11 jtonic/todo-zulu-alpine-jre-11:v1`
         
         - test the application again (see above)
         
@@ -148,18 +153,6 @@
 - [ ] Same as above but deployed to AWS cluster     
     
 - [ ] inheritable ThreadLocal when a new child thread is created from http servlet request thread. 
-
-## Temporarily action items
-    - detach the springboot-docker from the VCS
-    - delete the repository from github Tony
-    - create a new directory - todo
-    - move springboot-docker inside todo
-    - rename springboot-docker to fe
-    - push todo directory in github
-    - create a fe directory undee
-
-    - FE (Vue.js, VueX, Vue router, Vue-RX, Axios, Quasar)
-        - TBD
 
 ## __Notes:__
 

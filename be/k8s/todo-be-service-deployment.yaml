@@ -1,10 +1,17 @@
 kind: Service
 apiVersion: v1
 metadata:
+  namespace: todo
   name: todo-be
+  labels:
+    app: todo
+    tier: be
+    env: local
 spec:
   selector:
-    app: todo-be
+    app: todo
+    tier: be
+    type: container
   ports:
     - protocol: TCP
       port: 8081
@@ -14,19 +21,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: todo-be
+  labels:
+    app: todo
+    tier: be
+    env: local
 spec:
   selector:
     matchLabels:
-      app: todo-be
+      app: todo
+      tier: be
+      type: container
   replicas: 2
   template:
     metadata:
       labels:
-        app: todo-be
+        app: todo
+        tier: be
+        env: local
+        type: container
     spec:
       containers:
         - name: todo-be
-          image: jtonic/todo-zulu-alpine-jre-11:v1
-          imagePullPolicy: Always
+          image: todo-zulu-alpine-jre-11:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 8081

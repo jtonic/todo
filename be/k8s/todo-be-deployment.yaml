@@ -1,43 +1,23 @@
-kind: Service
-apiVersion: v1
-metadata:
-  namespace: todo
-  name: todo-be
-  labels:
-    app: todo
-    tier: be
-    env: local
-spec:
-  selector:
-    app: todo
-    tier: be
-    type: container
-  ports:
-    - protocol: TCP
-      port: 8081
-  type: ClusterIP
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: todo-be
+  namespace: todo
   labels:
     app: todo
     tier: be
-    env: local
 spec:
   selector:
     matchLabels:
       app: todo
       tier: be
       type: container
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
         app: todo
         tier: be
-        env: local
         type: container
     spec:
       containers:

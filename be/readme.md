@@ -19,36 +19,37 @@
 
     - How to build/run/test/publish the application?
     
-        - build the application 
-        `mvn package`
-
+        - use the minikube docker to build the image
+        `eval $(minikube docker-env)`
+    
         - build the maven image
         `docker build -t todo-zulu-alpine-jre-11 .`
+
         > __Notes:__
         > in order to simplify the local development and not publishing every build in docker hub/registry:
         > - Make the kubectl virtual machine's docker the current one (instead of the host docker) `eval $(minikube docker-env)`
         > - Don't version every build by tagging it
         > - To make the host docker again the current one use `eval $(minikube docker-env -u)`
 
-        - start the container and run the application
+        - [optional-1] start the container and run the application
         `docker run -d -p 8081:8081 --name todo-zulu-alpine-jre-11 todo-zulu-alpine-jre-11`
 
-        - test the docker container is running
+        - [optional-1] test the docker container is running
         `docker ps`
 
-        - test the application
-        `curl http://localhost:8080`
+        - [optional-2] test the application
+        `curl http://localhost:8081`
         
-        - stop the container
+        - [optional-1] stop the container
         `docker container stop todo-zulu-alpine-jre-11`
 
-        - remove the container
+        - [optional-1] remove the container
         `docker container rm todo-zulu-alpine-jre-11`
        
-        - check if it was successfully removed
+        - [optional-1] check if it was successfully removed
         `docker container ps -a | grep -i todo-zulu-alpine-jre-11 --color=always`
         
-        - publish the image
+        - [optional-1] publish the image
         ```bash
         docker login
         # publish latest version
@@ -59,52 +60,59 @@
         docker push jtonic/todo-zulu-alpine-jre-11:v1
         ```
       
+        - [x] create k8s namespace
+        
+        `kubectl create -f ../k8s/todo-namespace.yaml`
+        
+        - [x] and the check the new namespace 
+        
+        `kubectl get ns`
+         
         - [x] create the kubernetes deployment/service for the backend.
         
-        See the file `./k8s/todo-be-service-deployment.yaml`
+        See the files in folder `./k8s`
         
         > Initially we will expose the service publicly by using the `spec:type: NodePort` 
         > later on, when we'll have a frontend, the fe will be of type of NodePort and be of type `ClusterIP`  
 
-        - [x] deploy and run the BE in the minikube cluster
+        - [x] __deploy and run the BE in the minikube cluster__
         
-        `kubectl create -f ./k8s/todo-be-service-deployment.yaml`
+        `kubectl create -f ./k8s`
         
-        - [x] call the REST endpoint using the default browser
+        - [x] port-forward from host to k8s service
         
-        `minikube service todo-be`
+        `kubectl port-forward svc/todo-be -n todo 9092:8081`
         
-        - [x] or run curl `curl  $(minikube service todo-be --url)` 
+        - [x] and test with curl
+        
+        `curl -X GET http://localhost:9092/` 
+        
+        - [optional-2] [x] in case the be service is exposed on public ip:port run the following curl 
+        
+        `curl  $(minikube service todo-be --url)` 
         
         > **Note** If something went wrong, and the mistakes is in the kubernetes service/deployment definition file, correct the mistake and replace/redeploy it.
         > The command: `kubectl replace --force -f ./k8s/todo-be-service-deployment.yaml`. DON'T USE THIS IN PROD!!!
 
         - **Clean up**
         
-        - show running container
-        `docker ps`
+        - delete all k8s objects in namespace todo
         
-        - stop container 
-        `docker stop todo-zulu-alpine-jre-11`
+        `kubectl delete all --all -n todo`
         
-        - remove container 
-        `docker rm todo-zulu-alpine-jre-11`
+        - check to see if all have been removed
         
-        - remove the tagged images
-        ```bash
-        docker image rm todo-zulu-alpine-jre-11
-        docker image rm jtonic/todo-zulu-alpine-jre-11
-        docker image rm jtonic/todo-zulu-alpine-jre-11:v1
-        ``` 
+        `kubectl get all -n todo`
+
+        - delete the newly created docker images
+        
+        `docker rmi todo-zulu-alpine-jre-11:latest` 
+
+        - setup the host docker daemon as the current one
+        
+        `eval $(minikube docker-env -u)`
+
         - stop minikube `minikube stop`
-        
-        - removed unused images
-        `docker image prune`
-        
-        - run the remote docker image (for production it is mandatory to run a version)
-        `docker run -d -p 8081:8081 --name todo-zulu-alpine-jre-11 jtonic/todo-zulu-alpine-jre-11:v1`
-        
-        - test the application again (see above)
         
         > **Note:** As a piece of advice consider making a small image.
         >
@@ -148,7 +156,7 @@
     
     
 - [ ] Deploy to Minikube via kubectl    
-    - [ ] a springboot microservice - type ClusterIP (internal IP)
+    - [x] a springboot microservice - type ClusterIP (internal IP)
     - [ ] a vuejs frontent application (calling the backend endpoints) - type NodePort (external fix IP)
 - [ ] Same as above but deployed to AWS cluster     
     
@@ -157,3 +165,37 @@
 ## __Notes:__
 
 - use `kubectl get ` command with `-o wide` option to see further information 
+
+
+## Optionals explanations
+
+- __optional-1__
+    - when:
+        - local development
+        - minikube's docker daemon is used
+        - Dockerfile is multistage:
+            - stage 1 (build) build the project with mvn package
+            - stage 2 (prod) run the java/sb application with artifacts produced by stage build.
+            
+- __optional-2__
+    - when: be services are exposed externally using the `type: NodePort`            
+
+## __BEST PRACTICES__
+
+- Use namespaces:
+    - why?
+        - querying by 
+            - all namespace: ` kubectl get svc --all-namespaces`
+            - specific namespace: ` kubectl get svc -n todo`
+        - delete all from namespaces `kubectl delete all --all -n todo-be`      
+    - further readings:
+        - how to configure the current namespace to the one created (i.e. todo-be)
+    
+- use labels
+- show information about k8s objects using custom columns.
+    `kubectl get svc --all-namespaces -o custom-columns=KIND:.kind,NAME:.metadata.name,NS:.metadata.namespace`
+    
+- local development
+    - use port- forward when the service is not exposed only inside the node
+    
+    `kubectl port-forward svc/todo-be -n todo 9092:8081`             

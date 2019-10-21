@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: todo-be
+  namespace: todo
+  labels:
+    app: todo
+    tier: be
+spec:
+  selector:
+    app: todo
+    tier: be
+    type: container
+  ports:
+    - protocol: TCP
+      port: 8081
+  type: ClusterIP

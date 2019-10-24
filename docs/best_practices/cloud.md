@@ -1,11 +1,19 @@
 # __BEST PRACTICES__
 
-## Use namespaces:
+## Use namespaces
+
 - __why?__
-    - querying by
-        - all namespace: `kubectl get svc --all-namespaces`
-        - specific namespace: ` kubectl get svc -n todo`
-    - delete all from namespaces `kubectl delete all --all -n todo-be`
+
+  - querying
+
+    - (all) services by all namespace: `kubectl get svc --all-namespaces`
+
+    - services by a specific namespace: `kubectl get svc -n todo`
+
+    - resources by a specific namespace: `kubectl get all -n todo`
+
+  - delete all from namespaces `kubectl delete all --all -n todo`
+
 - see all builtin and defined namespaces
 
     `kubectl config get-contexts minikube`

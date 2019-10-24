@@ -23,7 +23,7 @@
     `eval $(minikube docker-env)`
 
     - build the maven image
-    `docker build -t todo-zulu-alpine-jre-11 .`
+    `docker build -t todo-zulu-alpine-jre-11 -f ./be/Dockerfile ./be`
 
     > __Notes:__
     > in order to simplify the local development and not publishing every build in docker hub/registry:

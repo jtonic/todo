@@ -11,8 +11,8 @@ FROM azul/zulu-openjdk-alpine:11.0.4-jre as prod
 VOLUME /tmp
 ARG DEPENDENCY=/workspace/app/target/dependency
 
-RUN addgroup -S todo && adduser -S todo -G todo
-USER todo
+RUN addgroup -S todobe && adduser -S todobe -G todobe
+USER todobe
 
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF

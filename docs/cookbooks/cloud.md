@@ -40,7 +40,7 @@ There are many solutions but the straightforward one is to build the image from 
     
 - Build the todo-be image
 
-    `docker build -t todo-zulu-alpine-jre-11 .`
+    `docker build -t todo-zulu-alpine-jre-11 -f ./be/Dockerfile ./be`
     
 - Create a custom namespace for easy cleanup of the cluster new objects
 

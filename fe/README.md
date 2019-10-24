@@ -17,7 +17,7 @@
 
 - [x] Create a todo-fe image (latest, v1)
 
-    `docker build -t todo-fe-alpine-ngnix-vue .`
+    `docker build -t todo-fe-alpine-ngnix-vue -f ./fe/Dockerfile ./fe`
 
 - [x] Run a container based on the newly created image
 

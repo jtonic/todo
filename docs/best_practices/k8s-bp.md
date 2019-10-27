@@ -1,4 +1,4 @@
-# __BEST PRACTICES__
+# Kubernetes best practices
 
 ## Use namespaces
 

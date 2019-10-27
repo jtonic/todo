@@ -60,4 +60,5 @@
 
 ## Best practices
 
- See [here](../docs/best_practices/cloud.md)
+- [k8s best practices](../docs/best_practices/k8s-bp.md)
+- [docker best practices](../docs/best_practices/docker-bp.md)
